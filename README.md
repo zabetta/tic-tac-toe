@@ -54,7 +54,7 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 
 
 ## EXAMPLE OF GAME
-
+# PLAYER 1 WIN
 <ul>
 <li>curl --location --request POST 'http://localhost:8000/api/start-new-game' <br/><b>Returns 1</b></li>
 <li>curl --location --request PUT 'http://localhost:8000/api/play-game-turn' --header 'Content-Type: application/json' --data-raw '{
@@ -83,8 +83,9 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
     "position": 3
 }'</li>
 </ul>
-# PLAYER 1 WIN
 
+
+# ERROR POSITION ALREADY TAKEN
 <ul>
 <li>curl --location --request POST 'http://localhost:8000/api/start-new-game' <br/><b>Returns 2</b></li>
 <li>curl --location --request PUT 'http://localhost:8000/api/play-game-turn' --header 'Content-Type: application/json' --data-raw '{
@@ -98,8 +99,8 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
     "position": 1
 }'</li>
 </ul>
-# ERROR POSITION ALREADY TAKEN
 
+# ERROR WRONG TURN
 <ul>
 <li>curl --location --request POST 'http://localhost:8000/api/start-new-game' <br/><b>Returns 3</b></li>
 <li>curl --location --request PUT 'http://localhost:8000/api/play-game-turn' --header 'Content-Type: application/json' --data-raw '{
@@ -108,24 +109,8 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
     "position": 1
 }'</li>
 </ul>
-# ERROR WRONG TURN
 
-
-<ul>
-<li>curl --location --request POST 'http://localhost:8000/api/start-new-game' <br/><b>Returns 4</b></li>
-<li>curl --location --request PUT 'http://localhost:8000/api/play-game-turn' --header 'Content-Type: application/json' --data-raw '{
-    "id" : 4,
-    "player" : 1,
-    "position": 1
-}'</li>
-<li>curl --location --request PUT 'http://localhost:8000/api/play-game-turn' --header 'Content-Type: application/json' --data-raw '{
-    "id" : 4,
-    "player" : 2,
-    "position": 1
-}'</li>
-</ul>
-# ERROR POSITION ALREADY TAKEN
-
+# GAME ENDED WITH NO WINNER
 <ul>
 <li>curl --location --request POST 'http://localhost:8000/api/start-new-game' <br/><b>Returns 5</b></li>
 <li>curl --location --request PUT 'http://localhost:8000/api/play-game-turn' --header 'Content-Type: application/json' --data-raw '{
@@ -174,5 +159,5 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
     "position": 8
 }'</li>
 </ul>
-#GAME ENDED WITH NO WINNER
+
 
