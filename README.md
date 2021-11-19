@@ -1,66 +1,178 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
-
 <p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+    <a href="https://en.wikipedia.org/wiki/Tic-tac-toe" target="_blank">
+        <img src="https://www.crushpixel.com/big-static18/preview4/tic-tac-toe-game-linear-2806278.jpg" width="400"></a></p>
 
-## About Laravel
+## Backend TEST 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This is the backend of a Tic-Tac-Toe game:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Request : 
+
+The backend will be used by a frontend built by a separate team, but they have
+provided us with a set of product level requirements that we must meet, exposed as
+an API. The requirements are as follows:
+<ol>
+<li>Need an endpoint to call to start a new game. The response should give me
+some kind of ID for me to use in other endpoints calls to tell the backend what
+game I am referring to.</li>
+<li>Need an endpoint to call to play a move in the game. The endpoint should take
+as inputs the Game ID (from the first endpoint), a player number (either 1 or 2),
+and the position of the move being played. The response should include a data
+structure with the representation of the full board so that the UI can update
+itself with the latest data on the server. The response should also include a flag
+indicating whether someone has won the game or not and who that winner is if
+so.</li>
+<li>The endpoint that handles moves being played should perform some basic
+error handling to ensure the move is valid, and that it is the right players turn
+(ie. a player cannot play two moves in a row, or place a piece on top of another
+player’s piece)</li>
+</ol>
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+## INSTALLATION
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+<ol>
+<li>Clone the project</li>
+<li>Run composer install</li>
+<li>rename .env.example to .env</li>
+<li>set mysql configuration in .env</li>
+<li>create db</li>
+<li>run migration (php artisan migrate) to generate db schema</li>    
+</ol>
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## EXECUTION
 
-## Laravel Sponsors
+<ul>
+<li>curl --location --request POST 'http://localhost:8000/api/start-new-game' <br/><b>Returns Game ID</b></li>
+<li>curl --location --request PUT 'http://localhost:8000/api/play-game-turn' \ --header 'Content-Type: application/json' \ --data-raw '{ "id" : RETURNED ID POSITION, "player" : 1 OR 2 (1 START GAME), "position": 1 TO 9 }'</li>
+<li>rename .env.example to .env</li>
+<li>set mysql configuration in .env</li>
+<li>create db</li>
+<li>run migration (php artisan migrate) to generate db schema</li>    
+</ul>
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-### Premium Partners
+## EXAMPLE OF GAME
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-- **[Romega Software](https://romegasoftware.com)**
+<ul>
+<li>curl --location --request POST 'http://localhost:8000/api/start-new-game' <br/><b>Returns 1</b></li>
+<li>curl --location --request PUT 'http://localhost:8000/api/play-game-turn' --header 'Content-Type: application/json' --data-raw '{
+    "id" : 1,
+    "player" : 1,
+    "position": 1
+}'</li>
+<li>curl --location --request PUT 'http://localhost:8000/api/play-game-turn' --header 'Content-Type: application/json' --data-raw '{
+    "id" : 1,
+    "player" : 2,
+    "position": 4
+}'</li>
+<li>curl --location --request PUT 'http://localhost:8000/api/play-game-turn' --header 'Content-Type: application/json' --data-raw '{
+    "id" : 1,
+    "player" : 1,
+    "position": 2
+}'</li>
+<li>curl --location --request PUT 'http://localhost:8000/api/play-game-turn' --header 'Content-Type: application/json' --data-raw '{
+    "id" : 1,
+    "player" : 2,
+    "position": 5
+}'</li>
+    <li>curl --location --request PUT 'http://localhost:8000/api/play-game-turn' --header 'Content-Type: application/json' --data-raw '{
+    "id" : 1,
+    "player" : 1,
+    "position": 3
+}'</li>
+</ul>
+# PLAYER 1 WIN
 
-## Contributing
+<ul>
+<li>curl --location --request POST 'http://localhost:8000/api/start-new-game' <br/><b>Returns 2</b></li>
+<li>curl --location --request PUT 'http://localhost:8000/api/play-game-turn' --header 'Content-Type: application/json' --data-raw '{
+    "id" : 2,
+    "player" : 1,
+    "position": 1
+}'</li>
+<li>curl --location --request PUT 'http://localhost:8000/api/play-game-turn' --header 'Content-Type: application/json' --data-raw '{
+    "id" : 2,
+    "player" : 2,
+    "position": 1
+}'</li>
+</ul>
+# ERROR POSITION ALREADY TAKEN
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+<ul>
+<li>curl --location --request POST 'http://localhost:8000/api/start-new-game' <br/><b>Returns 3</b></li>
+<li>curl --location --request PUT 'http://localhost:8000/api/play-game-turn' --header 'Content-Type: application/json' --data-raw '{
+    "id" : 3,
+    "player" : 2,
+    "position": 1
+}'</li>
+</ul>
+# ERROR WRONG TURN
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+<ul>
+<li>curl --location --request POST 'http://localhost:8000/api/start-new-game' <br/><b>Returns 4</b></li>
+<li>curl --location --request PUT 'http://localhost:8000/api/play-game-turn' --header 'Content-Type: application/json' --data-raw '{
+    "id" : 4,
+    "player" : 1,
+    "position": 1
+}'</li>
+<li>curl --location --request PUT 'http://localhost:8000/api/play-game-turn' --header 'Content-Type: application/json' --data-raw '{
+    "id" : 4,
+    "player" : 2,
+    "position": 1
+}'</li>
+</ul>
+# ERROR POSITION ALREADY TAKEN
 
-## Security Vulnerabilities
+<ul>
+<li>curl --location --request POST 'http://localhost:8000/api/start-new-game' <br/><b>Returns 5</b></li>
+<li>curl --location --request PUT 'http://localhost:8000/api/play-game-turn' --header 'Content-Type: application/json' --data-raw '{
+    "id" : 5,
+    "player" : 1,
+    "position": 1
+}'</li>
+<li>curl --location --request PUT 'http://localhost:8000/api/play-game-turn' --header 'Content-Type: application/json' --data-raw '{
+    "id" : 5,
+    "player" : 2,
+    "position": 2
+}'</li>
+<li>curl --location --request PUT 'http://localhost:8000/api/play-game-turn' --header 'Content-Type: application/json' --data-raw '{
+    "id" : 5,
+    "player" : 1,
+    "position": 3
+}'</li>
+<li>curl --location --request PUT 'http://localhost:8000/api/play-game-turn' --header 'Content-Type: application/json' --data-raw '{
+    "id" : 5,
+    "player" : 2,
+    "position": 5
+}'</li>
+<li>curl --location --request PUT 'http://localhost:8000/api/play-game-turn' --header 'Content-Type: application/json' --data-raw '{
+    "id" : 5,
+    "player" : 1,
+    "position": 4
+}'</li>
+<li>curl --location --request PUT 'http://localhost:8000/api/play-game-turn' --header 'Content-Type: application/json' --data-raw '{
+    "id" : 5,
+    "player" : 2,
+    "position": 7
+}'</li>
+<li>curl --location --request PUT 'http://localhost:8000/api/play-game-turn' --header 'Content-Type: application/json' --data-raw '{
+    "id" : 5,
+    "player" : 1,
+    "position": 6
+}'</li>
+<li>curl --location --request PUT 'http://localhost:8000/api/play-game-turn' --header 'Content-Type: application/json' --data-raw '{
+    "id" : 5,
+    "player" : 2,
+    "position": 9
+}'</li>
+<li>curl --location --request PUT 'http://localhost:8000/api/play-game-turn' --header 'Content-Type: application/json' --data-raw '{
+    "id" : 5,
+    "player" : 1,
+    "position": 8
+}'</li>
+</ul>
+#GAME ENDED WITH NO WINNER
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
